@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
     <style>
         *{
             font-family: 'Poppins', sans-serif;
@@ -39,7 +41,7 @@
                         </ul>
                     </div>
                     <div class="h-25">
-                        <button type="button" class="btn btn-dark px-4">Add to Cart</button>
+                        <button type="button" class="btn btn-dark px-2">Add to Cart <i class="fas fa-shopping-cart"></i></button>
                     </div>
                 </div>
                 <div class="col-6 px-3 py-2">
@@ -55,11 +57,13 @@
         let coursework = new Vue({
             el: "#app",
             method: {
+                addToCart(){
 
+                }
             },
             data: {
                 product: {id: 1001,
-                    Subject: "Server Security",
+                    Subject: "Web",
                     Location: "Dubai",
                     Price: 2700,
                     Space: 5
