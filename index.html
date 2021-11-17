@@ -19,13 +19,21 @@
     </nav>
 
     <div id="app" class="d-flex justify-content-center">
-        <div class="card my-5" style="width: 36rem;">
-            <div class="card-body">
-              <!--h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a-->
+        <div class="card my-5" style="width: 27rem;">
+            <div class="card-body row">
+                <div class="col-6 border px-3 py-5">
+                    <ul class="list-unstyled fw-bold">
+                        <li>Subject: {{product.Subject}}</li>
+                        <li>Location: {{product.Location}}</li>
+                        <li>Price: {{product.Price}}</li>
+                        <li>Spaces: {{product.Space}}</li>
+                    </ul>
+                </div>
+                <div class="col-6 border px-3 py-2">
+                    <div class="h-75 border">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -37,7 +45,12 @@
 
             },
             data: {
-                product
+                product: {id: 1001,
+                    Subject: "SQL",
+                    Location: "Dubai",
+                    price: 2700,
+                    Space: 5
+                }
             }
         })
     </script>
