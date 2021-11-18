@@ -29,19 +29,19 @@
     </nav>
 
     <div id="app" class="d-flex justify-content-center">
-        <div class="card my-5" style="width: 27rem;">
+        <div class="card my-5 shadow-sm border" style="width: 27rem;">
             <div class="card-body row">
                 <div class="col-5 p-3">
                     <div class="h-75">
                         <ul class="list-unstyled fw-bold">
                             <li>Subject: {{product.Subject}}</li>
                             <li>Location: {{product.Location}}</li>
-                            <li>Price: د.إ {{product.Price}}</li>
-                            <li>Spaces: {{product.Space}}</li>
+                            <li>Price: £ {{product.Price}}</li>
+                            <li>spaces: {{product.space}}</li>
                         </ul>
                     </div>
                     <div class="h-25">
-                        <button type="button" class="btn btn-dark px-2">Add to Cart <i class="fas fa-shopping-cart"></i></button>
+                        <button v-on:click="addToCart" class="btn btn-dark px-2">Add to Cart <i class="fas fa-shopping-cart"></i></button>
                     </div>
                 </div>
                 <div class="col-6 px-3 py-2">
@@ -56,17 +56,18 @@
 
         let coursework = new Vue({
             el: "#app",
-            method: {
-                addToCart(){
-
-                }
-            },
             data: {
-                product: {id: 1001,
-                    Subject: "Web",
+                product: {
+                    id: 1001,
+                    Subject: "London",
                     Location: "Dubai",
                     Price: 2700,
-                    Space: 5
+                    space: 5
+                }
+            },
+            methods: {
+                addToCart: () => {
+                    console.log(this.product);
                 }
             }
         })
