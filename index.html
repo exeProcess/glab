@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Lab work</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <style>
         *{
             font-family: 'Poppins', sans-serif;
@@ -19,58 +20,345 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-light bg-dark">
-        <div class="container">
-          <a class="navbar-brand text-white fw-bold" href="#">
-            <!--img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"-->
-            Group Coursework
-          </a>
-        </div>
-    </nav>
-
-    <div id="app" class="d-flex justify-content-center">
-        <div class="card my-5 shadow-sm border" style="width: 27rem;">
-            <div class="card-body row">
-                <div class="col-5 p-3">
-                    <div class="h-75">
-                        <ul class="list-unstyled fw-bold">
-                            <li>Subject: {{product.Subject}}</li>
-                            <li>Location: {{product.Location}}</li>
-                            <li>Price: £ {{product.Price}}</li>
-                            <li>spaces: {{product.space}}</li>
-                        </ul>
-                    </div>
-                    <div class="h-25">
-                        <button v-on:click="addToCart" class="btn btn-dark px-2">Add to Cart <i class="fas fa-shopping-cart"></i></button>
+    <div id="app">
+        <nav class="navbar navbar-light bg-dark">
+            <div class="container d-flex justify-content-between">
+              <a class="navbar-brand text-white fw-bold" href="#">
+                <!--img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" class="img-fluid" width="30" height="24"-->
+                {{sitname}}
+              </a>
+              <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <svg class="my-auto" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                width="24" height="24"
+                viewBox="0 0 172 172"
+                style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="#212529"></path><g fill="#ffffff"><path d="M11.46667,11.46667c-2.06765,-0.02924 -3.99087,1.05709 -5.03322,2.843c-1.04236,1.78592 -1.04236,3.99474 0,5.78066c1.04236,1.78592 2.96558,2.87225 5.03322,2.843h10.7724c1.29517,0 2.37592,0.81106 2.74349,2.06042l24.43385,83.06614c2.14446,7.29116 8.88821,12.34011 16.49453,12.34011h62.93229c7.73092,0 14.55694,-5.22483 16.59532,-12.67604l14.89323,-54.61224c0.47113,-1.72445 0.11102,-3.56997 -0.97382,-4.99081c-1.08485,-1.42084 -2.7703,-2.25442 -4.55795,-2.25424h-111.72161l-7.08828,-24.10911c-0.00373,0 -0.00747,0 -0.0112,0c-1.78818,-6.07784 -7.40968,-10.29089 -13.73984,-10.29089zM68.8,131.86667c-6.33287,0 -11.46667,5.1338 -11.46667,11.46667c0,6.33287 5.1338,11.46667 11.46667,11.46667c6.33287,0 11.46667,-5.1338 11.46667,-11.46667c0,-6.33287 -5.1338,-11.46667 -11.46667,-11.46667zM126.13333,131.86667c-6.33287,0 -11.46667,5.1338 -11.46667,11.46667c0,6.33287 5.1338,11.46667 11.46667,11.46667c6.33287,0 11.46667,-5.1338 11.46667,-11.46667c0,-6.33287 -5.1338,-11.46667 -11.46667,-11.46667z"></path></g></g></svg>
+              </a>
+            </div>
+        </nav>
+    
+        <div class="d-flex justify-content-center">
+            <div class="container-fluid border px-2 mt-5 row">
+                <div class="pt-3 px-1 col-10 mx-auto row gx-2">
+                    <div class="content">
+                        <div class="search">
+                          <input type="text" class="search__input" @keyup="searching()" v-model="input" aria-label="search" placeholder="enter your search">
+                          <button class="search__submit" aria-label="submit search"><i class="fas fa-search"></i></button>
+                        </div>
+                      </div>
+                    <div v-for="lesson in product" class="card my-5 border-0 col-4 h-auto">
+                        <div class="border shadow-sm rounded m-auto row py-3 h-auto" style="width:90%;">
+                            <div class="col-7">
+                                <div class="h-75">
+                                    <strong>Subject: </strong> <span class="filterable-attribute">{{lesson.Subject}} </span>
+                  
+                                    <strong>Location: </strong> <span class="filterable-attribute">{{lesson.Location}}</span>
+                                    
+                                    <strong>Price: </strong> <span class="filterable-attribute">₦ {{lesson.Price}}</span>
+                                    
+                                    <strong>Spaces: </strong> <span class="filterable-attribute">{{lesson.space}}</span>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <img v-bind:src="lesson.img" alt="">
+                            </div>
+                            <div class="h-25 col-12">
+                                <button class="btn float-center btn-outline-dark mx-auto" v-on:click='addToCart(lesson)' v-if='lesson.space > 0'>Add to cart</button>
+                                <button class="btn btn-outline-dark mx-auto" v-else @click="removeFromCart(lesson)">Delete from cart</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 px-3 py-2">
-                    <div class="h-auto">
-                        <img src="sql1.jpg" alt="">
+                <div class="pt-3 px-2 col-2">
+                    <div class="rounded h-80">
+                        <div class="d-flex justify-content-between mx-auto ">
+                            <img class="my-auto" src="https://img.icons8.com/ios-glyphs/24/000000/sorting-options.png"/>
+                            <p class="my-auto fw-bold">Filter</p>
+                        </div>
+                        <ul class="list-unstyled mt-5">
+                            <li v-for="filter in filters" :key="filter.id" class="d-flex align-items-center justify-content-between">
+                              <label :for="'mf_rdb_'+filter.id">{{filter.name}}</label>
+                              <input type="radio" name="main-filter" :id="'mf_rdb_'+filter.id" @click="toggleMainFilter(filter)" class="filters mr-2" :checked="filter.checked" />
+                            </li>
+                          </ul>
+                          <hr>
+                          <ul class="list-unstyled">
+                            <li v-for="sfilter in secondary_filters" :key="sfilter.id" class="d-flex align-items-center justify-content-between">
+                              <label :for="'sf_rdb_'+sfilter.id" >{{sfilter.name}}</label>
+                              <input type="radio" name="secondary-filter" :id="'sf_rdb_'+sfilter.id" @click="toggleSecondaryFilter(sfilter)" class="filters mr-2" :checked="sfilter.checked"/>
+                            </li>
+                            
+                          </ul>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">items</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="items in cart">
+                                <td class="shoping__cart__item">
+                                    <!--div class="" style='width:270px;height:150px;'-->
+                                        <img v-bind:src="items.img" alt="img">
+                                    <!--/div-->
+                                    <!--h5 style='font-size:bold;font:italic;' class="product">{{items.Subject}}</h5-->
+                                </td>
+                                <td class="shoping__cart__price">
+                                    {{items.Price}}
+                                </td>
+                                <td class="shoping__cart__quantity">
+                                    <div>
+                                        <div class="pro-qty" id="qty-1" onclick="getId(this.id)">
+                                            <input type="number" min="0" max="5" v-model="items.amountInCart" class="quantity">
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="shoping__cart__total" id="price-1">
+                                    {{items.totalPrice}}
+                                </td>
+                                <td class="shoping__cart__item__close">
+                                    <span class="icon_close" id="remove-1" onclick="removeItem(this.id)"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>   
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__btns">
+                            <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                            <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                                Upadate Cart</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="shoping__continue">
+                            <div class="shoping__discount">
+                                <h5>Discount Codes</h5>
+                                <form action="#">
+                                    <input type="text" placeholder="Enter your coupon code">
+                                    <button type="submit" class="site-btn">APPLY COUPON</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="shoping__checkout">
+                            <h5>Cart Total</h5>
+                            <ul>
+                                <li>Subtotal <span id='sub-total' class="ms-5">{{cartPrice}}</span></li>
+                                <li>Total <span id='total' class="ms-5">{{cartPrice}}</span></li>
+                            </ul>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModal2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModal2Label">Modal title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="" id="step1">
+                    <form style="display:block" id="form1">
+                            <div class="row d-flex justify-content-center">
+                                <div class="form-group col-12">
+                                    <label for="Address">Street</label>
+                                    <input type="text" id="street" name="street" required class="form-control">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="Address">City</label>
+                                    <input type="text" id="city" name="city" required class="form-control">
+                                </div>
+                                <div class="form-group col-12">
+                                    <label for="Address">State</label>
+                                    <input type="text" id="state" required name="state" class="form-control">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="next">next</button>
+            
+                        </form>
+                    </div>
+                    <div class="" style="display:none" id="step2">
+                        <form action="" id="form2">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="form-group col-12">
+                                        <label for="Address">Email</label>
+                                        <input type="text" id="email" name="email" required class="form-control">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="Address">Name</label>
+                                        <input type="text" id="name" name="name" required class="form-control">
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label for="Address">Contact</label>
+                                        <input type="text" id="contact" name="contact" required class="form-control">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" id="check">Checkout</button>
+                                <button class="btn btn-primary ml-2" id="back">Back</button>
+                            </form>
+                        </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="product.js">
+    </script>
+        <script src="https://js.paystack.co/v1/inline.js"></script> 
     <script>
 
-        let coursework = new Vue({
-            el: "#app",
-            data: {
-                product: {
-                    id: 1001,
-                    Subject: "London",
-                    Location: "Dubai",
-                    Price: 2700,
-                    space: 5
-                }
-            },
-            methods: {
-                addToCart: () => {
-                    console.log(this.product);
+var proQty = $('.pro-qty');
+        proQty.prepend('<span class="dec qtybtn">-</span>');
+        proQty.append('<span class="inc qtybtn">+</span>');
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            if ($button.hasClass('inc')) {
+                var newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue == 1) {
+                    var newVal = parseFloat(oldValue);
+                } else {
+                    newVal = parseFloat(oldValue) - 1;
                 }
             }
+            $button.parent().find('input').val(newVal);
+            let parent = $("#"+ele).parent().parent().parent();
+            let data = parent.children('td').map(function(){
+                return $(this).text();
+            }).get();
+
+            data[2] = newVal;
+            data[3] = newVal * data[1];
+            let idNum = ele.split('-')[1];
+            $("#price-"+idNum).text(data[3]);
+            let paren = proQty.parent().parent().parent();
+            let res = 0; 
+            let total = paren.children("td").map(function(){
+                if($(this).hasClass("shoping__cart__total")){
+                    return $(this).text();
+                } 
+            }).get();
+            total.forEach((data)=>{
+                res = res + Number(data);
+            })
+            $('#total').text("$ "+res);
+            $('#sub-total').text("$ "+res);
+            updateCart();
+        });
+        $('#next').click(function(){
+            if($("#state").val() != "" && $("#city").val() != "" && $("#street").val() != ""){
+                $('#step1').hide();
+                $('#step2').show();
+            }
         })
+        $('#back').click(function(){
+            $('#step2').hide();
+            $('#step1').show();
+        })
+        $("#form1").submit(() => {
+            return false;
+        })
+        $("#form2").submit(() => {
+            return false;
+        })
+        $("#check").click(function(e){
+            if($("#email").val() != "" && $("#name").val() != "" && $("#contact").val() != ""){
+                $("#exampleModal").hide();
+                payWithPaystack(e)
+            }
+            //console.log($("#total").html());
+        })
+        let totalamount = parseInt(document.querySelector("#total").innerHTML)
+        function payWithPaystack(e) {
+            e.preventDefault();
+            let handler = PaystackPop.setup({
+                key: 'pk_test_0b17c7dbe011fa692e763cb1b86b3a73defd4a06', // Replace with your public key
+                email: document.getElementById("email").value,
+                amount: totalamount * 100,
+                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+                // label: "Optional string that replaces customer email"
+                onClose: function(){
+                alert('Window closed.');
+                },
+                callback: function(response){
+                    //let message = 'Payment complete! Reference: ' + response.reference;
+                    let formData = new FormData()
+                    let data1 = $("#form1").serializeArray();
+                    let data2 = $("#form2").serializeArray();
+                    //console.log(data1);
+                    for(let data of data1){
+                        formData.append(data.name,data.value);
+                    }
+                    for(let data of data2){
+                        formData.append(data.name,data.value);
+                    }
+                    formData.append("ref",response.reference)
+                    let products = $(".product").map(function(){
+                            return $(this).text();
+                        }).get();
+                        let quantity = $(".quantity").map(function(){
+                            return $(this).val();
+                        }).get().filter((data)=>{
+                        return data !== "";
+                        });
+                        
+                        for(let key in products){
+                            formData.append("cart_item[]",[products[key],quantity[key]])
+                        }
+                    $.ajax({
+                        url: "../requests.php",
+                        method: "POST",
+                        data: formData,
+                        processData: false,
+                        cache: false,
+                        contentType: false,
+                        success: (res) => {
+                            console.log(res);
+                           $("#exampleModal").modal('hide')
+                        },
+                        error: () => {
+                            console.log("something went wrong");
+                        }
+                    })
+                }
+            });
+            handler.openIframe();
+        }
     </script>
 </body>
 </html>
