@@ -190,7 +190,7 @@ var coursework = new Vue({
         async getAllLesson(){
           try {
               const lesson = await fetch('https://cw2backend.herokuapp.com/collection/product')
-              this.lessons =  await lesson.json()   
+              this.product =  await lesson.json()   
           } catch (error) {
               console.log(error);
           }
