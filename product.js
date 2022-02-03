@@ -196,6 +196,7 @@ var coursework = new Vue({
           }
         }
       },
+ 
       mounted(){
         this.getAllLesson();
       },
