@@ -3,88 +3,7 @@ var coursework = new Vue({
     data: {
         sitname: "After school Activity",
         input: "",
-        product: [
-            {
-                id: 1,
-                Subject: "Economics",
-                Location: "Dubai",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-flatart-icons-outline-flatarticons/100/000000/external-economics-business-flatart-icons-outline-flatarticons.png"
-            },
-            {
-                id: 2, 
-                Subject: "Agriculture",
-                Location: "Nigeria",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-icongeek26-glyph-icongeek26/100/000000/external-agriculture-agriculture-icongeek26-glyph-icongeek26.png"
-            },
-            {
-                id: 3,
-                Subject: "Music",
-                Location: "London",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/100/000000/external-music-player-social-media-vitaliy-gorbachev-lineal-vitaly-gorbachev.png"
-            },
-            {
-                id: 4,
-                Subject: "Abacus",
-                Location: "Honk kong",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-itim2101-fill-itim2101/100/000000/external-abacus-calculate-itim2101-fill-itim2101.png"
-            },
-            {
-                id: 5,
-                Subject: "Language",
-                Location: "Brunei",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/ios-filled/100/000000/language.png"
-            },
-            {
-                id: 6,
-                Subject: "Geography",
-                Location: "Dubai",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-flatart-icons-outline-flatarticons/100/000000/external-geography-geography-flatart-icons-outline-flatarticons.png"
-            },
-            {
-                id: 7,
-                Subject: "Biology",
-                Location: "Dubai",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-neu-royyan-wijaya/100/000000/external-biology-neu-medical-neu-royyan-wijaya.png"
-            },
-            {
-                id: 8,
-                Subject: "Mathematics",
-                Location: "Canada",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/external-becris-lineal-becris/100/000000/external-maths-data-science-becris-lineal-becris.png"
-            },
-            {
-                id: 9,
-                Subject: "Physics",
-                Location: "Canada",
-                Price: 2700,
-                space: 5,
-                img: "https://img.icons8.com/ios-filled/100/000000/physics.png"
-            },
-            {
-                id: 10,
-                Subject: "Chemistry",
-                Location: "Mumbai",
-                Price: 5400,
-                space: 5,
-                img:"https://img.icons8.com/external-flatart-icons-lineal-color-flatarticons/100/000000/external-chemistry-school-and-learning-flatart-icons-lineal-color-flatarticons.png"
-            },
-        ],
+        product: [],
         filters: [
           {
             id: 1,
@@ -268,5 +187,16 @@ var coursework = new Vue({
     
           this.lessons = this.lessons.sort(this.dynamicSort(sign + filter));
         },
-    },
+        async getAllLesson(){
+          try {
+              const lesson = await fetch('https://cw2backend.herokuapp.com/collection/product')
+              this.lessons =  await lesson.json()   
+          } catch (error) {
+              console.log(error);
+          }
+        }
+      },
+      mounted(){
+        this.getAllLesson();
+      },
 })
