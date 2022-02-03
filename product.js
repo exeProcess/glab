@@ -46,11 +46,11 @@ var coursework = new Vue({
     },
     methods: {
         addToCart(course) {
-          if (course.space > 0) {
+          if (course.spaces > 0) {
             if(this.cart.indexOf(course) != -1){
               course.amountInCart++;
               //this.cart.push(course);
-              course.space--;
+              course.spaces--;
               this.total.push(course.Price)
               this.total.map(e => {
                 this.cartPrice += e
@@ -70,9 +70,9 @@ var coursework = new Vue({
           }
         },
         
-        searching() {
+        async searching() {
     
-          $(".card").each((i, ele) => {
+          /*$(".card").each((i, ele) => {
             let filterableText = "";
             let hide = false;
             $(ele).addClass("d-none");
@@ -90,14 +90,16 @@ var coursework = new Vue({
               console.clear();
               $(ele).removeClass("d-none");
             }
-          });
+          });*/
+          
+
         },
     
         removeFromCart(course) {
           course.amountInCart--;
           course.totalPrice = course.Price * course.amountInCart
           this.total += course.price;
-          course.space++;
+          course.spaces++;
         },
         deleteFromCart(course){
           let id = this.cart.indexOf(course);
@@ -196,7 +198,6 @@ var coursework = new Vue({
           }
         }
       },
- 
       mounted(){
         this.getAllLesson();
       },
