@@ -62,7 +62,7 @@
                                 <img v-bind:src="lesson.img" alt="">
                             </div>
                             <div class="h-25 col-12">
-                                <button class="btn float-center btn-outline-dark mx-auto" v-on:click='addToCart(lesson)' v-if='lesson.space > 0'>Add to cart</button>
+                                <button class="btn float-center btn-outline-dark mx-auto" v-on:click='addToCart(lesson)' v-if='lesson.spaces > 0'>Add to cart</button>
                                 <button class="btn btn-outline-dark mx-auto" v-else @click="removeFromCart(lesson)">Delete from cart</button>
                             </div>
                         </div>
