@@ -142,31 +142,30 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="shoping__cart__btns">
-                            <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                            <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
-                                Upadate Cart</a>
-                        </div>
+                        
                     </div>
                     <div class="col-lg-6">
-                        <div class="shoping__continue">
-                            <div class="shoping__discount">
-                                <h5>Discount Codes</h5>
-                                <form action="#">
-                                    <input type="text" placeholder="Enter your coupon code">
-                                    <button type="submit" class="site-btn">APPLY COUPON</button>
+                        <div class="">
+                            <form id="form2">
+                                    <div class="row d-flex justify-content-center">
+                                    
+                                        <div class="form-group col-12">
+                                            <label for="Address">Name</label>
+                                            <input type="text" id="name" name="name" v-bind="order.name" required class="form-control">
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label for="Address">Contact</label>
+                                            <input type="text" id="contact" v-bind="order.number" name="contact" required class="form-control">
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
-                        </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="shoping__checkout">
-                            <h5>Cart Total</h5>
-                            <ul>
-                                <li>Subtotal <span id='sub-total' class="ms-5">{{cartPrice}}</span></li>
-                                <li>Total <span id='total' class="ms-5">{{cartPrice}}</span></li>
-                            </ul>
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="primary-btn">PROCEED TO CHECKOUT</a>
+                            
+                            <a href="#" @click="sendCart" class="primary-btn">PROCEED TO CHECKOUT</a>
+                            
                         </div>
                     </div>
                 </div>
@@ -181,32 +180,12 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModal2Label">Modal title</h5>
+              <h5 class="modal-title" id="exampleModal2Label">Details</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="" id="step1">
-                    <form style="display:block" id="form1">
-                            <div class="row d-flex justify-content-center">
-                                <div class="form-group col-12">
-                                    <label for="Address">Street</label>
-                                    <input type="text" id="street" name="street" required class="form-control">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="Address">City</label>
-                                    <input type="text" id="city" name="city" required class="form-control">
-                                </div>
-                                <div class="form-group col-12">
-                                    <label for="Address">State</label>
-                                    <input type="text" id="state" required name="state" class="form-control">
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary" id="next">next</button>
-            
-                        </form>
-                    </div>
-                    <div class="" style="display:none" id="step2">
-                        <form action="" id="form2">
+                    <div class="">
+                        <form id="form2">
                                 <div class="row d-flex justify-content-center">
                                     <div class="form-group col-12">
                                         <label for="Address">Email</label>
@@ -221,144 +200,16 @@
                                         <input type="text" id="contact" name="contact" required class="form-control">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary" id="check">Checkout</button>
-                                <button class="btn btn-primary ml-2" id="back">Back</button>
+                                <input type="submit"  onclick="return false" class="btn btn-primary my-3" value="checkout">
                             </form>
                         </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="product.js">
     </script>
-        <script src="https://js.paystack.co/v1/inline.js"></script> 
-    <script>
-
-var proQty = $('.pro-qty');
-        proQty.prepend('<span class="dec qtybtn">-</span>');
-        proQty.append('<span class="inc qtybtn">+</span>');
-        proQty.on('click', '.qtybtn', function () {
-            var $button = $(this);
-            var oldValue = $button.parent().find('input').val();
-            if ($button.hasClass('inc')) {
-                var newVal = parseFloat(oldValue) + 1;
-            } else {
-                // Don't allow decrementing below zero
-                if (oldValue == 1) {
-                    var newVal = parseFloat(oldValue);
-                } else {
-                    newVal = parseFloat(oldValue) - 1;
-                }
-            }
-            $button.parent().find('input').val(newVal);
-            let parent = $("#"+ele).parent().parent().parent();
-            let data = parent.children('td').map(function(){
-                return $(this).text();
-            }).get();
-
-            data[2] = newVal;
-            data[3] = newVal * data[1];
-            let idNum = ele.split('-')[1];
-            $("#price-"+idNum).text(data[3]);
-            let paren = proQty.parent().parent().parent();
-            let res = 0; 
-            let total = paren.children("td").map(function(){
-                if($(this).hasClass("shoping__cart__total")){
-                    return $(this).text();
-                } 
-            }).get();
-            total.forEach((data)=>{
-                res = res + Number(data);
-            })
-            $('#total').text("$ "+res);
-            $('#sub-total').text("$ "+res);
-            updateCart();
-        });
-        $('#next').click(function(){
-            if($("#state").val() != "" && $("#city").val() != "" && $("#street").val() != ""){
-                $('#step1').hide();
-                $('#step2').show();
-            }
-        })
-        $('#back').click(function(){
-            $('#step2').hide();
-            $('#step1').show();
-        })
-        $("#form1").submit(() => {
-            return false;
-        })
-        $("#form2").submit(() => {
-            return false;
-        })
-        $("#check").click(function(e){
-            if($("#email").val() != "" && $("#name").val() != "" && $("#contact").val() != ""){
-                $("#exampleModal").hide();
-                payWithPaystack(e)
-            }
-            //console.log($("#total").html());
-        })
-        let totalamount = parseInt(document.querySelector("#total").innerHTML)
-        function payWithPaystack(e) {
-            e.preventDefault();
-            let handler = PaystackPop.setup({
-                key: 'pk_test_0b17c7dbe011fa692e763cb1b86b3a73defd4a06', // Replace with your public key
-                email: document.getElementById("email").value,
-                amount: totalamount * 100,
-                ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-                // label: "Optional string that replaces customer email"
-                onClose: function(){
-                alert('Window closed.');
-                },
-                callback: function(response){
-                    //let message = 'Payment complete! Reference: ' + response.reference;
-                    let formData = new FormData()
-                    let data1 = $("#form1").serializeArray();
-                    let data2 = $("#form2").serializeArray();
-                    //console.log(data1);
-                    for(let data of data1){
-                        formData.append(data.name,data.value);
-                    }
-                    for(let data of data2){
-                        formData.append(data.name,data.value);
-                    }
-                    formData.append("ref",response.reference)
-                    let products = $(".product").map(function(){
-                            return $(this).text();
-                        }).get();
-                        let quantity = $(".quantity").map(function(){
-                            return $(this).val();
-                        }).get().filter((data)=>{
-                        return data !== "";
-                        });
-                        
-                        for(let key in products){
-                            formData.append("cart_item[]",[products[key],quantity[key]])
-                        }
-                    $.ajax({
-                        url: "../requests.php",
-                        method: "POST",
-                        data: formData,
-                        processData: false,
-                        cache: false,
-                        contentType: false,
-                        success: (res) => {
-                            console.log(res);
-                           $("#exampleModal").modal('hide')
-                        },
-                        error: () => {
-                            console.log("something went wrong");
-                        }
-                    })
-                }
-            });
-            handler.openIframe();
-        }
-    </script>
-</body>
 </html>

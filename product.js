@@ -42,7 +42,11 @@ var coursework = new Vue({
         ],
         cart: [],
         total: [],
-        cartPrice: 0
+        cartPrice: 0,
+        order: {
+          name: "",
+          number: ""
+        }
     },
     methods: {
         addToCart(course) {
@@ -69,30 +73,53 @@ var coursework = new Vue({
             }
           }
         },
-        
-        async searching() {
-    
-          /*$(".card").each((i, ele) => {
-            let filterableText = "";
-            let hide = false;
-            $(ele).addClass("d-none");
-    
-            $(ele)
-              .find(".filterable-attribute")
-              .each((i, ele2) => {
-                filterableText +=
-                  " " + ele2.innerText.toLowerCase().replace(/\s\s+/g, " ");
-              });
-    
-            show = filterableText.includes(this.input);
-    
-            if (show) {
-              console.clear();
-              $(ele).removeClass("d-none");
+        async sendCart(){
+          let data = {
+            info: this.order,
+            order: this.cart,
+          }
+         try {
+            let sendOrder = await  fetch('http://localhost:3000/collection/order', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              mode: "cors",
+              cache: "no-store",
+              body: JSON.stringify(data),
+          })
+            let res = await sendOrder
+            if(res !== null){
+               this.cart.forEach(element => {
+                 this.product.forEach(ele => {
+                   if(element._id == ele._id){
+                     let spaceUpdate = ele.spaces - element.amountInCart
+                     let newSpace = {
+                       spaces: spaceUpdate
+                     }
+                     fetch('http://localhost:3000/collection/order/'+element._id, {
+                        method: 'PUT',
+                        body: JSON.stringify(newSpace),
+                    })
+                        .then(response => response.json())
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                   }
+                 })
+               });
             }
-          });*/
-          
-
+         } catch (error) {
+           console.log(error);
+         }
+        },
+        async searching() {
+          try {
+            let serachResult = await fetch('http://localhost:3000/collection/product/search?q='+this.input)
+            this.product = await serachResult.json()
+          } catch (error) {
+            console.log(error);
+          }
         },
     
         removeFromCart(course) {
@@ -111,13 +138,6 @@ var coursework = new Vue({
           this.cart = [];
           this.total = 0;
         },
-    
-        checkout() {
-          let msg = `Thanks ${this.person.name} for buys from out store.. (£ ${this.total})`;
-          alert(msg);
-          this.resetVariable();
-        },
-    
         stopNumericInput(event) {
           let keyCode = event.keyCode ? event.keyCode : event.which;
           if (keyCode > 47 && keyCode < 58) {
@@ -201,4 +221,5 @@ var coursework = new Vue({
       mounted(){
         this.getAllLesson();
       },
+      
 })
