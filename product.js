@@ -79,7 +79,7 @@ var coursework = new Vue({
             order: this.cart,
           }
          try {
-            let sendOrder = await  fetch('https://backendcw2.herokuapp.com/collection/order', {
+            let sendOrder = await  fetch('https://cw2backend.herokuapp.com/collection/order', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ var coursework = new Vue({
                      let newSpace = {
                        spaces: spaceUpdate
                      }
-                     fetch('https://backendcw2.herokuapp.com/collection/order/'+element._id, {
+                     fetch('https://cw2backend.herokuapp.com/collection/order/'+element._id, {
                         method: 'PUT',
                         body: JSON.stringify(newSpace),
                     })
@@ -115,7 +115,7 @@ var coursework = new Vue({
         },
         async searching() {
           try {
-            let serachResult = await fetch('https://backendcw2.herokuapp.com/collection/product/search?q='+this.input)
+            let serachResult = await fetch('https://cw2backend.herokuapp.com/collection/product/search?q='+this.input)
             this.product = await serachResult.json()
           } catch (error) {
             console.log(error);
