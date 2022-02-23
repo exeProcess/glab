@@ -1,4 +1,4 @@
-var coursework = new Vue({
+ var coursework = new Vue({
     el: "#app",
     data: {
         sitname: "After school Activity",
@@ -50,70 +50,79 @@ var coursework = new Vue({
     },
     methods: {
         addToCart(course) {
-          if (course.spaces > 0) {
+          //if (course.spaces > 0) {
             if(this.cart.indexOf(course) != -1){
               course.amountInCart++;
               //this.cart.push(course);
               course.spaces--;
-              this.total.push(course.Price)
-              this.total.map(e => {
-                this.cartPrice += e
-              })
-              console.log(this.total);
+              
+              console.log(this.cart);
             }else{
               course.amountInCart = 1;
               course.totalPrice = course.Price
               this.cart.push(course);
-              course.space--;
-              this.total.push(course.Price)
-              this.total.map(e => {
-                this.cartPrice += e
-              })
-              console.log(this.total);
+              course.space -=1;
+              
+
+              console.log(this.cart);
             }
-          }
+          //}
+         // console.log(course);
         },
+        countDown(baseCase) {
+
+          if(baseCase  == 0 ){
+            //console.log(this.cart[baseCase]);
+            return;
+          }else{
+            //console.log(this.cart[baseCase - 1]["_id"]);
+            for(let ele in this.product){
+              if(this.cart[baseCase - 1]["_id"] == this.product[ele]._id){
+                let space = (parseInt(this.product[ele].spaces) - parseInt(this.cart[baseCase - 1]["amountInCart"]))
+                let data = {
+                  spaces: space
+                }
+                fetch('https://cw2backend.herokuapp.com/collection/product/'+this.cart[baseCase - 1]["_id"], {
+                        method: 'PUT',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({"spaces": space}),
+                    })
+                        .then(response => response.json())
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                break;
+              }
+            }
+            return this.countDown(baseCase - 1)
+          }
+          //console.log(this.cart.length);
+      },
         async sendCart(){
           let data = {
             info: this.order,
             order: this.cart,
           }
          try {
-            let sendOrder = await  fetch('https://cw2backend.herokuapp.com/collection/order', {
+            let sendOrder = await fetch('https://cw2backend.herokuapp.com/collection/order', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
               },
               mode: "cors",
-              cache: "no-store",
+              
               body: JSON.stringify(data),
           })
             let res = await sendOrder
             if(res !== null){
-               this.cart.forEach(element => {
-                 this.product.forEach(ele => {
-                   if(element._id == ele._id){
-                     let spaceUpdate = ele.spaces - element.amountInCart
-                     let newSpace = {
-                       spaces: spaceUpdate
-                     }
-                     fetch('https://cw2backend.herokuapp.com/collection/order/'+element._id, {
-                        method: 'PUT',
-                        body: JSON.stringify(newSpace),
-                    })
-                        .then(response => response.json())
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                   }
-                 })
-               });
-               window.location.reload()
+              let baseCase = this.cart.length
+              this.countDown(baseCase)
             }
          } catch (error) {
            console.log(error);
          }
         },
+  
         async searching() {
           try {
             let serachResult = await fetch('https://cw2backend.herokuapp.com/collection/product/search?q='+this.input)
