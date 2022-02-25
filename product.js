@@ -69,7 +69,7 @@
           //}
          // console.log(course);
         },
-        countDown(baseCase) {
+        updateSpaces(baseCase) {
 
           if(baseCase  == 0 ){
             //console.log(this.cart[baseCase]);
@@ -94,7 +94,7 @@
                 break;
               }
             }
-            return this.countDown(baseCase - 1)
+            return this.updateSpaces(baseCase - 1)
           }
           //console.log(this.cart.length);
       },
@@ -116,7 +116,7 @@
             let res = await sendOrder
             if(res !== null){
               let baseCase = this.cart.length
-              this.countDown(baseCase)
+              this.updateSpaces(baseCase)
             }
          } catch (error) {
            console.log(error);
